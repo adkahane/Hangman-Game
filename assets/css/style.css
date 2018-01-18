@@ -1,0 +1,9 @@
+h1 {
+	font-size: 36px;
+	font-family: metalFont;
+}
+
+@font-face {
+    font-family: metalFont;
+    src: url(../fonts/XXII Ultimate-Black-Metal.ttf);
+}

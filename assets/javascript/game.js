@@ -1,37 +1,49 @@
-<script type="text/javascript">
-    // Creates an array that lists out all of the options (Rock, Paper, or Scissors).
-    var wordList = ["BURZUM", "MAYHEM", "DEATH", "GORGOROTH", "NORWAY", "BATHORY", "GOATS"];
 
-    // Creating variables to hold the number of wins, losses, and ties. They start at 0.
-    var wins = 0;
-    var losses = 0;
-    var ties = 0;
+// Variables
 
-    // This function is run whenever the user presses a key.
-    document.onkeyup = function(event) {
+var wordList = ["BURZUM", "MAYHEM", "DEATH", "GORGOROTH", "NORWAY", "BATHORY", "GOATS"];
+var lettersUsed = [];
+var wins = 0;
+var guessesLeft = 8;
 
-      // Determines which key was pressed.
-      var userGuess = event.key;
+// Functions
 
-      // Randomly chooses a choice from the options array. This is the Computer's guess.
-      var gameWord = wordList[Math.floor(Math.random() * wordList.length)];
+function compareUsed(used, guessed) {
 
-      // Game Logic      
+}
 
+function compareWord(word, guessed) {
 
-        // Creating a variable to hold our new HTML. Our HTML now keeps track of the user and computer guesses, and wins/losses/ties.
-        var html =
-          "<p>You chose: " + userGuess + "</p>" +
-          "<p>The computer chose: " + computerGuess + "</p>" +
-          "<p>wins: " + wins + "</p>" +
-          "<p>losses: " + losses + "</p>" +
-          "<p>ties: " + ties + "</p>";
+}
 
-        // Set the inner HTML contents of the #game div to our html string
-        document.querySelector("#game").innerHTML = html;
-      }
-      else {
-        document.querySelector("#game").innerHTML = "<p> Please only press R, P or S. Thank you!</p>"
-      }
-    };
-  </script>
+function newGame(play) {
+  theGame();
+}
+// Main
+// Every time the user presses a key this will run
+function theGame() {
+  document.onkeyup = function(event) {
+    // Determines which key was pressed.
+    var userGuess = event.key;
+    console.log(userGuess);
+    // Game Logic      
+    if (userGuess === compareUsed(userGuess)) {
+      // Shows the game progression and stats
+      var html =
+        "<p>You chose: " + userGuess + "</p>" +
+        "<p>The computer chose: " + computerGuess + "</p>" +
+        "<p>wins: " + wins + "</p>" +
+        "<p>losses: " + losses + "</p>" +
+        "<p>ties: " + ties + "</p>";
+
+    // Set the inner HTML contents of the #game div to our html string
+    document.querySelector("#game").innerHTML = html;
+    }
+
+    else {
+      document.querySelector("#game").innerHTML = "<p> Please only press R, P or S. Thank you!</p>"
+    }
+  }
+}
+
+theGame();
