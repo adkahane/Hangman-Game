@@ -31,7 +31,7 @@ function compareUsed(used, guess) {
 function compareWord(word, guess) {
   console.log("checking if letter is in word");
   for(i = 0; i < word.length; i++) {
-    if (guess === word.charAt(i)) {
+    if (guess === word[i]) {
       return(true);
     }
   }
@@ -46,6 +46,14 @@ function makeArrays(word) {
 
   for(i = 0; i < word.length; i++) {
     dashWord[i] = "_";
+  }
+}
+
+function revealLetter(guess) {
+  for(i = 0; i < arrayWord.length; i++) {
+    if (guess === arrayWord[i]) {
+      dashWord[i] = guess;
+    }
   }
 }
 
@@ -78,8 +86,9 @@ function theGame(word) {
         document.querySelector("#instruct").innerText = "Good Guess!";
         lettersUsed.push(userGuess);
         console.log(lettersUsed);  
-        if (compareWord(word, userGuess) === true) {
-          
+        if (compareWord(arrayWord, userGuess) === true) {
+          console.log("You found a letter");
+          revealLetter(userGuess);
         }
         else {
           guessesLeft--;
