@@ -1,20 +1,22 @@
+$(document).ready(function(){
+
 
 // Variables
 
 var wordList = ["BURZUM", "MAYHEM", "DEATH", "GORGOROTH", "NORWAY", "BATHORY", "GOATS"];
 var lettersUsed = [""];
-console.log(lettersUsed.length);
 var dashWord = [];
 var arrayWord = [];
 var wins = 0;
+var losses = 0;
 var guessesLeft = 8;
 var playGame = true;
 
 // Functions
 
-function randomWord(wordList) {
+function randomWord() {
   // console.log(wordList);
-  return(wordList[Math.floor(Math.random() * wordList.length)]);
+  return (wordList[Math.floor(Math.random() * wordList.length)]);
 }
 
 // Checks if the user has guessed the letter before
@@ -57,27 +59,44 @@ function revealLetter(guess) {
   }
 }
 
-//Prints the stats and game to the screen
+// Prints the stats and game to the screen
 function updateGame() {
+  $("#game").html("<p>Wins : " + wins + "</p>");
+}
+
+// Resets the Game when you run out of guesses
+function youLose() {
   var html = ""
   return(html);
 }
 
+// Resets the game when dashWord is fully revealed
+function youWin() {
+  var html = 
+    
+    "<p>Wins: " + wins
+  
+  document.querySelector("#game").innerHTML = html;
+}
+
 
 // Main game function.
-//Will run every time the user presses a key.
+// Will run every time the user presses a key.
 function theGame(word) {
+  debugger;
   makeArrays(word);
   console.log(word);
   console.log(arrayWord);
   console.log(dashWord);
-  // while(guessesLeft > 0) {
-    document.onkeyup = function(event) {
-      // Determines which key was pressed.
-      var userGuess = event.key;
-      console.log(userGuess);
-      // Game Logic
-      // console.log(lettersUsed);
+  document.onkeyup = function(event) {
+    // Determines which key was pressed.
+    var userGuess = event.key;
+    var keyCode = event.keyCode;
+    console.log(userGuess);
+    // Game Logic
+    // console.log(lettersUsed);
+    // if (keyCode >= 65 && keyCode <= 90) {
+
       if (compareUsed(lettersUsed, userGuess) === true) {
         document.querySelector("#instruct").innerText = "Choose another letter. Thank you!";
         console.log("This letter has been used");
@@ -95,16 +114,33 @@ function theGame(word) {
           console.log(guessesLeft);
         }
       }
-    }
+    
+    // else {
+    //   document.querySelector("#instruct").innerText = "Please choose a letter";
 
+    // }
+    updateGame();
+  }
+
+  // if (guessesLeft === 0) {
+  //   youLose();
+  //   losses++;
   // }
-  
+  // else if (dashWord === arrayWord) {
+  //   youWin();
+  //   wins++;
+  //   document.querySelector("#instruct").innerText = "6 YOU WIN 6";
+  // }
 }
 
 
 
+function startGame(){
+  theGame(randomWord());
+}
 
 //This is the actual game loop.
 // while(playGame === true) {
-  theGame(randomWord(wordList));
+ startGame();
 // }
+});
