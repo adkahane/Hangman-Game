@@ -10,20 +10,30 @@
 </head>
 
 <body>
-  <div class="col-4-sm text-center p-5 mx-auto">
+
+  <script src="assets/javascript/game.js"></script>
+
+  <div class="col-4 text-center p-5 mx-auto">
     <h1>6 HANGMAN 6</h1>
   </div>
 
   <div class="container">
-    <div class="col-6-sm mr-auto" id="man">
+    <div class="row">
+      <div class="col-6" id="man">
+        <p>An image will go here</p>
+      </div>
 
-    <div class="col-4-sm ml-auto" id="game">
-      <p>Press any button to play 6 HANGMAN 6</p>
+      <div class="col-4">
+        <div class="row">
+          <p id="instruct">2 Press any button to play 2</p>
+        </div>
+        <div class="row mt-5">
+          <span id="game" class="col-12"><p>The game will go here</p></span>
+        </div>
+      </div>
+      
     </div>
-  
-    <script src="assets/javascript/game.js"></script>
-  </div>
 
-</body>
+  </body>
 
-</html>
+  </html>

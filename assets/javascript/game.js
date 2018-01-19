@@ -4,19 +4,22 @@
 var wordList = ["BURZUM", "MAYHEM", "DEATH", "GORGOROTH", "NORWAY", "BATHORY", "GOATS"];
 var lettersUsed = [];
 var dashWord = [];
-var playWord;
+var arrayWord = [];
 var wins = 0;
 var guessesLeft = 8;
+var playGame = true;
 
+console.log(55);
 // Functions
 
 function randomWord(wordList) {
-  return(wordList[Math.floor(Math.random()*wordList.length())]);
+  console.log(wordList);
+  return(wordList[Math.floor(Math.random() * wordList.length)]);
 }
 
 // Checks if the user has guessed the letter before
 function compareUsed(used, guess) {
-  for(i = 1; i < guessed.length(); i++) {
+  for(i = 0; i < used.length; i++) {
     if (guess === used[i]) {
       return(true);
     }
@@ -28,8 +31,8 @@ function compareUsed(used, guess) {
 
 // Checks if the user's guess is in the current word
 function compareWord(word, guess) {
-  for(i = 1; i < word.length(); i++) {
-    if (guess === word[i]) {
+  for(i = 0; i < word.length; i++) {
+    if (guess === word.charAt(i)) {
       return(true);
     }
     else {
@@ -38,36 +41,48 @@ function compareWord(word, guess) {
   }
 }
 
-// Main
-// Every time the user presses a key this will run
-function theGame() {
-  for(guessesLeft = 8; guessesLeft > 0; guessesLeft--) {
+//Make word into an array called playWord
+//Make an array of length word.length full of '_' characters
+function makeArrays(word) {
+  for(i = 0; i < word.length; i++) {
+    arrayWord[i] = word.charAt(i);
+  }
+}
+
+
+// Main game function.
+//Will run every time the user presses a key.
+function theGame(word) {
+
+  while(guessesLeft > 0) {
     document.onkeyup = function(event) {
       // Determines which key was pressed.
       var userGuess = event.key;
       console.log(userGuess);
       // Game Logic
-      if (compareUsed(lettersUsed, userGuess) === true) {
-        // Shows the game progression and stats
-        var html =
-          "<p>Wins: " + wins + "</p>" +
-          "<p>Word: " + computerGuess + "</p>" +
-          "<p>wins: " + wins + "</p>" +
-          "<p>losses: " + losses + "</p>" +
-          "<p>ties: " + ties + "</p>";
+      if (compareUsed(lettersUsed, userGuess) === false) {
+        lettersUsed.push(userGuess);
+        if (compareWord(word, userGuess) === false) {
+        guessesLeft--;
+        }
+        else {
 
-      // Set the inner HTML contents of the #game div to our html string
-      document.querySelector("#game").innerHTML = html;
+        }
       }
-
       else {
-        document.querySelector("#man").innerHTML = "<p> Please only press R, P or S. Thank you!</p>"
+        document.querySelector("#instruct").innerText = "Choose another letter. Thank you!";
       }
+
     }
   }
+
 }
 
-while(true) {
-  randomWord(wordList);
-  theGame();
-}
+
+
+
+//This is the actual game loop.
+console.log(wordList[2]);
+// while(play game === true) {
+  theGame(randomWord(wordList));
+  
