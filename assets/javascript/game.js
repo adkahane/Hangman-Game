@@ -73,6 +73,11 @@ function youLose() {
 
 // Resets the game when dashWord is fully revealed
 function youWin() {
+
+  // mySound = new Audio([]);
+
+  var audio = new Audio('assets/audio/mayhemdeathcrush.mp3');
+  audio.play();
   $("#winStats").html("<p>Wins : " + wins + "</p>");
   $("#man").attr("src", "");
   startGame();
