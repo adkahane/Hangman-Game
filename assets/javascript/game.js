@@ -74,12 +74,40 @@ function youLose() {
 // Resets the game when dashWord is fully revealed
 function youWin() {
   $("#winStats").html("<p>Wins : " + wins + "</p>");
+  $("#man").attr("src", "");
   startGame();
 }
 
 // Hangs the man
 function hangman() {
-  $("#man").attr("src", "assets/images/hangman_8.jpg");
+  switch (guessesLeft) {
+    case 7:
+      $("#man").attr("src", "assets/images/hangman_1.jpg");
+      break;
+    case 6:
+      $("#man").attr("src", "assets/images/hangman_2.jpg");
+      break;
+    case 5:
+      $("#man").attr("src", "assets/images/hangman_3.jpg");
+      break;
+    case 4:
+      $("#man").attr("src", "assets/images/hangman_4.jpg");
+      break;
+    case 3:
+      $("#man").attr("src", "assets/images/hangman_5.jpg");
+      break;
+    case 2:
+      $("#man").attr("src", "assets/images/hangman_6.jpg");
+      break;
+    case 1:
+      $("#man").attr("src", "assets/images/hangman_7.jpg");
+      break;
+    case 0:
+      $("#man").attr("src", "assets/images/hangman_8.jpg");
+      break;
+    default:
+      break;
+  }
 }
 
 // Main game function.
@@ -110,7 +138,8 @@ function theGame(word) {
         }
         else {
           guessesLeft--;
-          console.log(guessesLeft);
+          hangman();
+          
           $("#guessStats").html("<p>Guesses Left : " + guessesLeft + "</p>");
         }
       }
@@ -138,7 +167,6 @@ function theGame(word) {
 
 // Resets the game
 function startGame() {
-  hangman();
   guessesLeft = 8;
   lettersUsed = [""];
   dashWord = [];
