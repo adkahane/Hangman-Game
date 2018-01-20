@@ -20,7 +20,7 @@ function randomWord() {
 
 // Checks if the user has guessed the letter before
 function compareUsed(used, guess) {
-  console.log("checking if letter has been used");
+  
   for(i = 0; i < used.length; i++) {
     if (guess === used[i]) {
       return(true);
@@ -30,7 +30,7 @@ function compareUsed(used, guess) {
 
 // Checks if the user's guess is in the current word
 function compareWord(word, guess) {
-  console.log("checking if letter is in word");
+  
   for(i = 0; i < word.length; i++) {
     if (guess === word[i]) {
       return(true);
@@ -65,17 +65,14 @@ function updateGame() {
   $("#game").html("<p>Wins : " + wins + "</p>");
 }
 
-// Resets the Game when you run out of guesses
+// Resets the Game and updates stats when you run out of guesses
 function youLose() {
   $("#loseStats").html("<p>Losses : " + losses + "</p>");
   startGame();
 }
 
-// Resets the game when dashWord is fully revealed
+// Plays audio and updates stats when user wins
 function youWin() {
-
-  // mySound = new Audio([]);
-
   var audio = new Audio('assets/audio/mayhemdeathcrush.mp3');
   audio.play();
   $("#winStats").html("<p>Wins : " + wins + "</p>");
@@ -118,7 +115,6 @@ function hangman() {
 // Main game function.
 function theGame(word) {
   makeArrays(word);
-  console.log(arrayWord);
 
   // Main game event "loop"
   document.onkeyup = function(event) {
@@ -138,7 +134,6 @@ function theGame(word) {
         $("#letterStats").text(lettersUsed.join(" ").toLowerCase());
 
         if (compareWord(arrayWord, userGuess) === true) {
-          console.log("You found a letter");
           revealLetter(userGuess);
         }
         else {
@@ -154,14 +149,12 @@ function theGame(word) {
       document.querySelector("#instruct").innerText = "Please choose a letter";
     }
 
-    console.log(guessesLeft);
     if (guessesLeft === 0) {
       losses++;
       youLose();
       document.querySelector("#instruct").innerText = "1 1 1 YOU LOSE 1 1 1";
     }
-    console.log(dashWord);
-    console.log(arrayWord);
+
     if (dashWord.join() === arrayWord.join()) {
       wins++;
       youWin();
