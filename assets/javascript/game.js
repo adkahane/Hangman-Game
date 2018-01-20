@@ -3,14 +3,13 @@ $(document).ready(function(){
 
 // Variables
 
-var wordList = ["BURZUM", "MAYHEM", "DEATH", "GORGOROTH", "NORWAY", "BATHORY", "GOATS"];
+var wordList = ["BURZUM", "MAYHEM", "DEATH", "GORGOROTH", "NORWAY", "BATHORY", "GOATS", "IMMORTAL"];
 var lettersUsed = [""];
 var dashWord = [];
 var arrayWord = [];
 var wins = 0;
 var losses = 0;
 var guessesLeft = 8;
-var playGame = true;
 
 // Functions
 
@@ -49,6 +48,7 @@ function makeArrays(word) {
   for(i = 0; i < word.length; i++) {
     dashWord[i] = "_";
   }
+  $("#wordStats").text(dashWord.join(" "));
 }
 
 function revealLetter(guess) {
@@ -57,6 +57,7 @@ function revealLetter(guess) {
       dashWord[i] = guess;
     }
   }
+  $("#wordStats").text(dashWord.join(" "));
 }
 
 // Prints the stats and game to the screen
@@ -66,45 +67,43 @@ function updateGame() {
 
 // Resets the Game when you run out of guesses
 function youLose() {
-  var html = ""
-  return(html);
+  $("#loseStats").html("<p>Losses : " + losses + "</p>");
+  startGame();
 }
 
 // Resets the game when dashWord is fully revealed
 function youWin() {
-  var html = 
-    
-    "<p>Wins: " + wins
-  
-  document.querySelector("#game").innerHTML = html;
+  $("#winStats").html("<p>Wins : " + wins + "</p>");
+  startGame();
 }
 
+// Hangs the man
+function hangman() {
+  $("#man").attr("src", "assets/images/hangman_8.jpg");
+}
 
 // Main game function.
-// Will run every time the user presses a key.
 function theGame(word) {
-  debugger;
   makeArrays(word);
-  console.log(word);
   console.log(arrayWord);
-  console.log(dashWord);
+
+  // Main game event "loop"
   document.onkeyup = function(event) {
-    // Determines which key was pressed.
     var userGuess = event.key;
+    userGuess = userGuess.toUpperCase();
     var keyCode = event.keyCode;
-    console.log(userGuess);
+    
     // Game Logic
-    // console.log(lettersUsed);
-    // if (keyCode >= 65 && keyCode <= 90) {
+    if (keyCode >= 65 && keyCode <= 90) {
 
       if (compareUsed(lettersUsed, userGuess) === true) {
-        document.querySelector("#instruct").innerText = "Choose another letter. Thank you!";
+        document.querySelector("#instruct").innerText = "Pick a different letter.";
         console.log("This letter has been used");
       }
       else {
-        document.querySelector("#instruct").innerText = "Good Guess!";
         lettersUsed.push(userGuess);
-        console.log(lettersUsed);  
+        $("#letterStats").text(lettersUsed.join(" ").toLowerCase());
+
         if (compareWord(arrayWord, userGuess) === true) {
           console.log("You found a letter");
           revealLetter(userGuess);
@@ -112,35 +111,44 @@ function theGame(word) {
         else {
           guessesLeft--;
           console.log(guessesLeft);
+          $("#guessStats").html("<p>Guesses Left : " + guessesLeft + "</p>");
         }
       }
+    }
     
-    // else {
-    //   document.querySelector("#instruct").innerText = "Please choose a letter";
+    else {
+      document.querySelector("#instruct").innerText = "Please choose a letter";
+    }
 
-    // }
-    updateGame();
+    console.log(guessesLeft);
+    if (guessesLeft === 0) {
+      losses++;
+      youLose();
+      document.querySelector("#instruct").innerText = "1 1 1 YOU LOSE 1 1 1";
+    }
+    console.log(dashWord);
+    console.log(arrayWord);
+    if (dashWord.join() === arrayWord.join()) {
+      wins++;
+      youWin();
+      document.querySelector("#instruct").innerText = "6 6 6 YOU WIN 6 6 6";
+    }
   }
-
-  // if (guessesLeft === 0) {
-  //   youLose();
-  //   losses++;
-  // }
-  // else if (dashWord === arrayWord) {
-  //   youWin();
-  //   wins++;
-  //   document.querySelector("#instruct").innerText = "6 YOU WIN 6";
-  // }
 }
 
+// Resets the game
+function startGame() {
+  hangman();
+  guessesLeft = 8;
+  lettersUsed = [""];
+  dashWord = [];
+  arrayWord = [];
 
+  $("#guessStats").html("<p>Guesses Left : " + guessesLeft + "</p>");
+  $("#letterStats").text(lettersUsed.join(" "));
 
-function startGame(){
   theGame(randomWord());
 }
 
-//This is the actual game loop.
-// while(playGame === true) {
- startGame();
-// }
+startGame();
 });
